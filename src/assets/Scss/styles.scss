@@ -1,0 +1,54 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.v-application .overflow-hidden{
+    border-radius: 0;
+}
+
+.brand{
+    color: black !important;
+    font-size: 30px !important;
+}
+
+.container-head-text{
+    color: #f5ce42;
+}
+
+#chartdiv {
+    height: 80vh;
+    padding-top: 100px;
+}
+
+#chartdiv g[aria-labelledby="id-1434-title"]{
+    display: none;
+    pointer-events: none;
+}
+
+.channels .v-image__image--cover{
+    background-size: contain;
+}
+
+.v-application a{
+    text-decoration: none;
+}
+
+.channel-image{
+    cursor: pointer;
+    :hover{
+        background-image: url('../Images/play.png');
+        color: yellow;
+        background-position: center;
+        opacity: 0.8;
+    }
+}
+
+video#smTV {
+    width: 85vw;
+    height: 80vh;
+}
+
+.selected{
+    color: darkred!important;
+}
