@@ -147,9 +147,6 @@ export default {
         },
         makeFavorite(){
             var self = this;
-            console.log(self.$parent);
-            console.log(self.$parent.isFavorite);
-            console.log(self.$parent.$parent.isFavorite);
             if(self.$parent.$parent.isFavorite){
                 delete localStorage['smtv'];
                 self.$parent.$parent.isFavorite = false;
