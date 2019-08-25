@@ -129,9 +129,6 @@ export default {
             this.$router.push("/");
         }
     },
-    updated() {
-        this.getChannelsData(this.countryCode);
-    },
     computed: {
         getChannelsInfo(){
             let self = this, tempChannelsList = [];
@@ -167,7 +164,7 @@ export default {
             });
         },
         resetChannels(){
-            this.$router.push("/channels/"+this.countryCode);
+            this.$router.push("/static/Channels/"+this.countryCode);
         },
         watchChannel(channel) {
             this.$parent.channelInfo = channel;
