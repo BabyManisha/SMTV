@@ -70,7 +70,7 @@ export default {
     },
     computed: {
         getChannelsInfo(){
-            let self = this, tempChannelsList = [], searchText = self.$parent.$parent.searchText;
+            let self = this, tempChannelsList = [], searchText = self.$parent.$parent.searchText.toLowerCase();
             if(searchText && searchText.length){
                 for(let ch in self.channelsList){
                     if(self.channelsList[ch]['name'].toLowerCase().includes(searchText)){

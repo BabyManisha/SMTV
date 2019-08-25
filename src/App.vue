@@ -123,12 +123,12 @@ export default {
             this.channelInfo = cinfo;
         },
         getSearchData(){
-            let self = this, tempChannelsList = [];
+            let self = this, tempChannelsList = [], stext = self.searchText.toLowerCase();
             if(self.channelsList.length == 0){
                 this.$router.push("/");
-            }else if(self.searchText && self.searchText.length){
+            }else if(stext && stext.length){
                 for(let ch in self.channelsList){
-                    if(self.channelsList[ch]['name'].toLowerCase().includes(self.searchText)){
+                    if((self.channelsList[ch]['name'].toLowerCase()).includes(stext)){
                         tempChannelsList.push(self.channelsList[ch]);
                     }
                 }
