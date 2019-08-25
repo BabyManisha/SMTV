@@ -1,65 +1,6 @@
 <template>
     <v-app>
-        <v-app-bar
-            absolute
-            color="#f54254"
-            dark
-            src="https://picsum.photos/1920/1080?random"
-            fade-img-on-scroll
-            scroll-target="#scrolling-techniques-5"
-            scroll-threshold="500"
-        >
-            <template v-slot:img="{ props }">
-            <v-img
-                v-bind="props"
-                gradient="to top right, rgba(245, 96, 66,.7), rgba(245, 66, 84, .7)"
-            ></v-img>
-            </template>
-    
-            <router-link to="/">
-                <v-btn icon>
-                    <v-icon class="brand">live_tv</v-icon>
-                </v-btn>
-            </router-link>
-            
-            <v-toolbar-title><b>SM TV</b></v-toolbar-title>
-
-    
-            <div class="flex-grow-1"></div>
-
-            <v-text-field label="Search For Channels"
-                v-model="searchText" outlined clearable 
-                solo append-icon="search" hide-details single-line>
-            </v-text-field>
-
-            <router-link to="/countries" title="World Map">
-                <v-btn icon>
-                    <v-badge color="green">
-                        <template v-slot:badge >154</template>
-                        <v-icon>map</v-icon>
-                    </v-badge>
-                </v-btn>
-            </router-link>
-            
-            <v-btn icon @click="resetChannels()" title="Channels">
-                <v-badge color="green">
-                    <template v-slot:badge >{{channelsList.length}}</template>
-                    <v-icon>ballot</v-icon>
-                </v-badge>
-            </v-btn>
-            
-            <v-btn icon title="Favorite Channels" v-if="showPlaylist" @click="watchPlaylist()">
-                <v-btn icon>
-                    <v-badge color="green">
-                        <!-- <template v-slot:badge >5</template> -->
-                        <v-icon>playlist_play</v-icon>
-                    </v-badge>
-                </v-btn>
-            </v-btn>
-            
-        </v-app-bar>
-
-        <v-container style="padding-top: 100px;">
+        <v-container class="main-container">
             <h1 class="container-head-text">Select a Channel to Watch!! 😎 </h1>
             <div class="channels">
                 <v-row>
@@ -80,7 +21,6 @@
                                                 aspect-ratio="1"
                                                 class="grey lighten-2 channel-image white--text"
                                                 :title=channel.name
-                                                height="200px"
                                                 gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                                             >
                                                 <template v-slot:channel.name>
@@ -93,7 +33,7 @@
                                                     </v-row>
                                                 </template>
                                                 <v-card-title
-                                                    class="fill-height align-end"
+                                                    class="fill-height align-end channel-name"
                                                     v-text="channel.name"
                                                 ></v-card-title>
                                             </v-img>
@@ -118,7 +58,6 @@ export default {
     data() {
         return {
             channelsList: [],
-            searchText: '',
             showPlaylist: this.$parent.showPlaylist
         }
     },
@@ -131,10 +70,10 @@ export default {
     },
     computed: {
         getChannelsInfo(){
-            let self = this, tempChannelsList = [];
-            if(self.searchText.length){
+            let self = this, tempChannelsList = [], searchText = self.$parent.$parent.searchText;
+            if(searchText && searchText.length){
                 for(let ch in self.channelsList){
-                    if(self.channelsList[ch]['name'].toLowerCase().includes(self.searchText)){
+                    if(self.channelsList[ch]['name'].toLowerCase().includes(searchText)){
                         tempChannelsList.push(self.channelsList[ch]);
                     }
                 }
@@ -146,20 +85,18 @@ export default {
     methods: {
         getChannelsData(countryCode){
             let self = this;
-            self.$parent.channelInfo = {};
-            self.$parent.channelInfo['countryCode'] = countryCode;
             Vue.http.get("/Channels/"+countryCode+".json")
             .then((res)=>{
                 self.channelsList = res.data || [];
-                self.$parent.channelsList = self.channelsList;
+                self.$eventHub.$emit('updateChannelsList', self.channelsList);
             },(error)=>{
                 Vue.http.get("/Channels/UNSORTED.json")
                 .then((res)=>{
                     self.channelsList = res.data || [];
-                    self.$parent.channelsList = self.channelsList;
+                    self.$eventHub.$emit('updateChannelsList', self.channelsList);
                 },(error)=>{
                     self.channelsList = [];
-                    self.$parent.channelsList = [];
+                   self.$eventHub.$emit('updateChannelsList', []);
                 })
             });
         },
@@ -167,8 +104,9 @@ export default {
             this.$router.push("/static/Channels/"+this.countryCode);
         },
         watchChannel(channel) {
-            this.$parent.channelInfo = channel;
-            this.$parent.channelInfo['len'] = this.channelsList.length;
+            channel['len'] = this.channelsList.length;
+            channel['countryCode'] = this.countryCode;
+            this.$eventHub.$emit('updateChannelInfo', channel);
             this.$router.push("/live");
         },
         watchPlaylist(){

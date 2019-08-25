@@ -1,41 +1,7 @@
 <template>
     <v-app>
-        <v-app-bar
-            absolute
-            color="#f54254"
-            dark
-            src="https://picsum.photos/1920/1080?random"
-            fade-img-on-scroll
-            scroll-target="#scrolling-techniques-5"
-            scroll-threshold="500"
-        >
-            <template v-slot:img="{ props }">
-            <v-img
-                v-bind="props"
-                gradient="to top right, rgba(245, 96, 66,.7), rgba(245, 66, 84, .7)"
-            ></v-img>
-            </template>
-    
-            <router-link to="/">
-                <v-btn icon>
-                    <v-icon>live_tv</v-icon>
-                </v-btn>
-            </router-link>
-            
-            <v-toolbar-title><b>SM TV</b></v-toolbar-title>
-    
-            <div class="flex-grow-1"></div>
-    
-            <v-btn icon title="Favorite Channels" v-if="showPlaylist" @click="watchPlaylist()">
-                <v-badge color="green">
-                    <!-- <template v-slot:badge >5 </template> -->
-                    <v-icon>playlist_play</v-icon>
-                </v-badge>
-            </v-btn>
-        </v-app-bar>
-
-        <v-container style="padding-top: 100px;">
-            <h1 class="container-head-text">Enjoy Watching 6000+ Live channels from all over the world 😎 </h1>
+        <v-container class="main-container">
+            <h1 class="container-head-text">Enjoy Watching 6000+ Live channels from all over the world 😎</h1>
             <div class="worldmap">
                 <div id="chartdiv"></div>
             </div>

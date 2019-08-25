@@ -12,16 +12,28 @@ body {
     font-size: 30px !important;
 }
 
+// #header-div .v-text-field.v-text-field--solo .v-input__control{
+//     min-width: 50%;
+//     max-width: 50%;
+//     width: 50%;
+//     margin: auto;
+// }
+
+.main-container{
+    margin-top: 5rem;
+}
+
 .container-head-text{
     color: #f5ce42;
+    font-size: 1.5rem;
 }
 
 #chartdiv {
-    height: 80vh;
-    padding-top: 100px;
+    margin-top: 5rem;
+    height: 70vh;
 }
 
-#chartdiv g[aria-labelledby="id-1434-title"]{
+#chartdiv g[aria-labelledby="id-72-title"]{
     display: none;
     pointer-events: none;
 }
@@ -30,7 +42,7 @@ body {
     background-size: contain;
 }
 
-.v-application a{
+#header-div a{
     text-decoration: none;
 }
 
@@ -42,6 +54,14 @@ body {
         background-position: center;
         opacity: 0.8;
     }
+    .channel-name{
+        font-size: 1rem;
+        width: max-content;
+    }
+}
+
+.v-card__title.fill-height.align-end.channel-name:hover{
+    background: none !important;
 }
 
 video#smTV {
