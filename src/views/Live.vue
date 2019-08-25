@@ -78,7 +78,7 @@ export default {
     },
     computed: {
         getChannelsInfo(){
-            let self = this, tempChannelsList = [], searchText = self.$parent.$parent.searchText;
+            let self = this, tempChannelsList = [], searchText = self.$parent.$parent.searchText.toLowerCase();
             if(self.channelsList.length == 0){
                 self.$router.push("/");
             }else if(searchText && searchText.length){
